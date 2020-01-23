@@ -39,15 +39,15 @@
     \begin{gather}
         4(100000a + 10000b + 1000c + 100d + 10e + f) = 100000f + 10000e + 1000d + 100c + 10b + a \nonumber \\
         \Longleftrightarrow 400000a + 40000b + 4000c + 400d + 40e + 4f = 100000f + 10000e + 1000d + 100c + 10b + a \nonumber \\
-        \Longleftrightarrow 399999a + 39990b + 3900c = 600d + 9960e + 99996f \qquad |:3 \nonumber \\
+        \Longleftrightarrow 399999a + 39990b + 3900c = 600d + 9960e + 99996f \qquad |\div 3 \nonumber \\
         \Longleftrightarrow \underbrace{133333a + 13330b + 1300c}_A = \underbrace{200d + 3320e + 33332f}_B
     \end{gather}
     Заметим, что $B \divby 2$, значит и $A \divby 2$, но $(13330b + 1300c) \divby 2$ в силу четности обоих коэффициентов, значит выполняется условие $133333a \divby 2 \Leftrightarrow a \divby 2$. Таким образом, раз уж $a$ — положительная четная цифра, то $a \in \{2, 4, 6, 8\}$.
 
-    Оценим $B$ сверху. Это число принимает максимальное значение при $d = e = f = 9$, в этом случае $B = 200\cdot9 + 3320\cdot9 + 33332\cdot9 = 331668$. То есть получается,
-    что $B \leqslant 331668 = B_{\max}$.
+    Оценим $B$ сверху. Это число принимает максимальное значение при $d = e = f = 9$, в этом случае оно равно $200\cdot9 + 3320\cdot9 + 33332\cdot9 = 331668$. То есть получается,
+    что $B \leqslant 331668$.
 
-    Заметим, что уже при $a \geqslant 4$ имеет место оценка $A \geqslant 4\cdot133333 = 533332 > 331668 = B_{\max} \geqslant B \Rightarrow A > B$,
+    Заметим, что уже при $a \geqslant 4$ верно $A \geqslant 4\cdot133333 = 533332 > 331668 \geqslant B \Rightarrow A > B$,
     то есть равенство $A = B$ не может быть получено при $a \geqslant 4$, а в силу того, что $a \in \{2, 4, 6, 8\}$, эта цифра определяется однозначно
     $$
         \boxed{a = 2}
@@ -55,7 +55,7 @@
 
     Подставим эту информацию в уравнение (1), получим
     \begin{gather}
-        133333\cdot2 + 13330b + 1300c = 200d + 3320e + 33332f \qquad |:2 \nonumber \\
+        133333\cdot2 + 13330b + 1300c = 200d + 3320e + 33332f \qquad | \div 2 \nonumber \\
         \Longleftrightarrow \underbrace{133333 + 6665b + 650c}_{A'} = \underbrace{100d + 1660e + 16666f}_{B'}
     \end{gather}
     Имеем: $A' \geqslant 133333$. Возьмем в качестве $d, e$ их максимальные значения ($d = e = 9$), чтобы понять, каким минимальным может быть $f$, чтобы $B'$ удовлетворяло оценке на $A'$. Имеем 
@@ -83,7 +83,7 @@
     Подставим эту информацию в уравнение (2), получим
     \begin{gather}
         133333 + 6665b + 650c = 100d + 1660e + 133328 \nonumber \\
-        \Longleftrightarrow 5 + 6665b + 650c = 100d + 1660e \qquad |:5 \nonumber \\
+        \Longleftrightarrow 5 + 6665b + 650c = 100d + 1660e \qquad | \div 5 \nonumber \\
         \Longleftrightarrow \underbrace{1 + 1333b + 130c}_{A''} = \underbrace{20d + 332e}_{B''}
     \end{gather}
     Заметим, что $B'' \divby 2$, значит и $A'' \divby 2$, при этом $130c$ — четное слагаемое, а $1$ — нечетное слагаемое.
@@ -97,7 +97,7 @@
     Подставим эту информацию в уравнение (3), получим
     \begin{gather}
         1 + 1333 + 130c = 20d + 332e \nonumber \\
-        \Longleftrightarrow 1334 + 130c = 20d + 332e \qquad |:2 \nonumber \\
+        \Longleftrightarrow 1334 + 130c = 20d + 332e \qquad | \div 2 \nonumber \\
         \Longleftrightarrow \underbrace{667 + 65c}_{A'''} = \underbrace{10d + 166e}_{B'''}
     \end{gather}
     $B''' \divby 2 \Leftrightarrow A''' \divby 2 \Leftrightarrow (667 + 65c) \divby 2$, значит в силу нечетности 667, $65c$ — нечетное, то есть $c$ — нечетное.

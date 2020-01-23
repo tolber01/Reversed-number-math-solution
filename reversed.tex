@@ -1,0 +1,178 @@
+% !TEX options=--shell-escape
+\documentclass[12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{minted}
+\usemintedstyle{borland}
+\setlength{\parskip}{1.5em}
+\DeclareRobustCommand{\divby}{%
+  \mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
+}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm, bindingoffset=0cm]{geometry}
+\newtheorem{problem}{Задача}
+\newcommand\TheSolution{%
+  \textbf{Решение.}\\%
+}
+
+\begin{document}
+    \begin{problem}
+        Напишите функцию, находящую натуральные шестизначные числа, которые при перевороте становятся в 4 раза больше себя.
+    \end{problem}
+    \TheSolution
+    Все шестизначные натуральные числа имеют вид $\overline{abcdef}$, где $a, b, c, d, e, f$ — цифры, причем $a \neq 0$.
+    Наше число можно также представить в виде такой суммы
+    $$
+        \overline{abcdef} = 100000a + 10000b + 1000c + 100d + 10e + f
+    $$
+    это непосредственно вытекает из поразрадного представления натуральных чисел.
+
+    Перевернем исходное число, тогда получится $\overline{fedcba}$.
+    Аналогично запишем его в виде известной суммы
+    $$
+        \overline{fedcba} = 100000f + 10000e + 1000d + 100c + 10b + a
+    $$
+
+    По условию задачи $\overline{fedcba} = 4 \cdot \overline{abcdef}$, это можно записать в виде уравнения относительно всех шести цифр $a, b, c, d, e, f$
+    \begin{gather}
+        4(100000a + 10000b + 1000c + 100d + 10e + f) = 100000f + 10000e + 1000d + 100c + 10b + a \nonumber \\
+        \Longleftrightarrow 400000a + 40000b + 4000c + 400d + 40e + 4f = 100000f + 10000e + 1000d + 100c + 10b + a \nonumber \\
+        \Longleftrightarrow 399999a + 39990b + 3900c = 600d + 9960e + 99996f \qquad |:3 \nonumber \\
+        \Longleftrightarrow \underbrace{133333a + 13330b + 1300c}_A = \underbrace{200d + 3320e + 33332f}_B
+    \end{gather}
+    Заметим, что $B \divby 2$, значит и $A \divby 2$, но $(13330b + 1300c) \divby 2$ в силу четности обоих коэффициентов, значит выполняется условие $133333a \divby 2 \Leftrightarrow a \divby 2$. Таким образом, раз уж $a$ — положительная четная цифра, то $a \in \{2, 4, 6, 8\}$.
+
+    Оценим $B$ сверху. Это число принимает максимальное значение при $d = e = f = 9$, в этом случае $B = 200\cdot9 + 3320\cdot9 + 33332\cdot9 = 331668$. То есть получается,
+    что $B \leqslant 331668 = B_{\max}$.
+
+    Заметим, что уже при $a \geqslant 4$ имеет место оценка $A \geqslant 4\cdot133333 = 533332 > 331668 = B_{\max} \geqslant B \Rightarrow A > B$,
+    то есть равенство $A = B$ не может быть получено при $a \geqslant 4$, а в силу того, что $a \in \{2, 4, 6, 8\}$, эта цифра определяется однозначно
+    $$
+        \boxed{a = 2}
+    $$
+
+    Подставим эту информацию в уравнение (1), получим
+    \begin{gather}
+        133333\cdot2 + 13330b + 1300c = 200d + 3320e + 33332f \qquad |:2 \nonumber \\
+        \Longleftrightarrow \underbrace{133333 + 6665b + 650c}_{A'} = \underbrace{100d + 1660e + 16666f}_{B'}
+    \end{gather}
+    Имеем: $A' \geqslant 133333$. Возьмем в качестве $d, e$ их максимальные значения ($d = e = 9$), чтобы понять, каким минимальным может быть $f$, чтобы $B'$ удовлетворяло оценке на $A'$. Имеем 
+    \begin{gather*}
+        B' = 100\cdot9 + 1660\cdot9 + 16666f = 15840 + 16666f \geqslant 133333 \\
+        \Longleftrightarrow 16666f \geqslant 133333 - 15840 \\
+        \Longleftrightarrow f \geqslant \frac{117493}{16666} = 7\frac{831}{16666} \\
+        \Longrightarrow f \in \{8, 9\}
+    \end{gather*}
+    Иными словами, $f$ не может быть меньше 8. Очевидно, что при меньших значениях $d, e$ цифра $f$ должна быть еще больше, а значит приведенная оценка на $f$ справедлива.
+    Из этой оценки следует, что соответствующее цифре $f$ слагаемое $16666f \in \{133328, 149994\}$.
+
+    Исследуем $A'$ и $B'$ на предмет делимости на 5. 
+    \begin{itemize}
+        \item[$A'$:] Слагаемые $6665b$ и $650c$ делятся на 5, значит $A'$ имеет тот же остаток при делении на 5, что и слагаемое 133333.
+        Этот остаток равен 3.
+        \item[$B'$:] Слагаемые $100d$ и $1660e$ делятся на 5, значит $B'$ имеет тот же остаток при делении на 5, что и слагаемое $16666f$.
+        Этот остаток в зависимости от значений $f$ равен 3 для $f = 8$ или 4 для $f = 9$.
+    \end{itemize}
+    Раз уж имеет место равенство $A' = B'$, то их остатки при делении на 5 должны быть одинаковыми, это означает, что остаток $B'$ обязан быть равным 3, а это может быть только в случае $f = 8$, тем самым мы однозначно определили значение цифры $f$
+    $$
+        \boxed{f = 8}
+    $$
+
+    Подставим эту информацию в уравнение (2), получим
+    \begin{gather}
+        133333 + 6665b + 650c = 100d + 1660e + 133328 \nonumber \\
+        \Longleftrightarrow 5 + 6665b + 650c = 100d + 1660e \qquad |:5 \nonumber \\
+        \Longleftrightarrow \underbrace{1 + 1333b + 130c}_{A''} = \underbrace{20d + 332e}_{B''}
+    \end{gather}
+    Заметим, что $B'' \divby 2$, значит и $A'' \divby 2$, при этом $130c$ — четное слагаемое, а $1$ — нечетное слагаемое.
+    Значит четность $A''$ будет обеспечена только в том случае, если слагаемое $1333b$ также является нечетным, то есть $b$ — нечетное. Иными словами, $b \in \{1, 3, 5, 7, 9\}$.
+
+    Заметим, что уже при $b \geqslant 3$ имеет место оценка $A'' \geqslant 1 + 1333\cdot3 = 4000$. Но даже при максимальных $d$ и $e$ ($d = e = 9$) $B''$ принимает значение $B''_{\max} = 20\cdot9 + 332\cdot9 = 3168 < 4000 \leqslant A''$. То есть при $b \geqslant 3$ равенство $A'' = B''$ не реализуется, это приводит к тому, что цифра $b$ также определяется однозначно
+    $$
+        \boxed{b = 1}
+    $$
+
+    Подставим эту информацию в уравнение (3), получим
+    \begin{gather}
+        1 + 1333 + 130c = 20d + 332e \nonumber \\
+        \Longleftrightarrow 1334 + 130c = 20d + 332e \qquad |:2 \nonumber \\
+        \Longleftrightarrow \underbrace{667 + 65c}_{A'''} = \underbrace{10d + 166e}_{B'''}
+    \end{gather}
+    $B''' \divby 2 \Leftrightarrow A''' \divby 2 \Leftrightarrow (667 + 65c) \divby 2$, значит в силу нечетности 667, $65c$ — нечетное, то есть $c$ — нечетное.
+    Иными словами, $c \in \{1, 3, 5, 7, 9\}$. Выразим цифру $e$ из уравнения (4)
+    $$
+        e = \frac{667 + 65c - 10d}{166}
+    $$
+    Оценим ее сверху и снизу для разных значений $c$ и попробуем найти значение цифры $d$:
+    \begin{itemize}
+        \item[$c = 1$:]
+            \begin{gather*}
+                e = \frac{732 - 10d}{166} = \frac{366 - 5d}{83} \\
+                \Longrightarrow 3\frac{72}{83} = \frac{366 - 5\cdot9}{83} \leqslant e \leqslant \frac{366}{83} = 4\frac{34}{83} \\
+                \Longrightarrow e = 4 \\
+                \Longrightarrow 5d = 366 - 83e = 366 - 83\cdot4 = 34 \Rightarrow \varnothing
+            \end{gather*}
+        \item[$c = 3$:]
+            \begin{gather*}
+                e = \frac{862 - 10d}{166} = \frac{431 - 5d}{83} \\
+                \Longrightarrow 4\frac{54}{83} = \frac{431 - 5\cdot9}{83} \leqslant e \leqslant \frac{431}{83} = 5\frac{16}{83} \\
+                \Longrightarrow e = 5 \\
+                \Longrightarrow 5d = 431 - 83e = 431 - 83\cdot5 = 16 \Rightarrow \varnothing
+            \end{gather*}
+        \item[$c = 5$:]
+            \begin{gather*}
+                e = \frac{992 - 10d}{166} = \frac{496 - 5d}{83} \\
+                \Longrightarrow 5\frac{36}{83} = \frac{496 - 5\cdot9}{83} \leqslant e \leqslant \frac{496}{83} = 5\frac{81}{83} \\
+                \Longrightarrow \varnothing
+            \end{gather*}
+        \item[$c = 7$:]
+            \begin{gather*}
+                e = \frac{1122 - 10d}{166} = \frac{561 - 5d}{83} \\
+                \Longrightarrow 6\frac{18}{83} = \frac{561 - 5\cdot9}{83} \leqslant e \leqslant \frac{561}{83} = 6\frac{63}{83} \\
+                \Longrightarrow \varnothing
+            \end{gather*}
+        \item[$c = 9$:]
+            \begin{gather*}
+                e = \frac{1252 - 10d}{166} = \frac{626 - 5d}{83} \\
+                \Longrightarrow 7 = \frac{626 - 5\cdot9}{83} \leqslant e \leqslant \frac{626}{83} = 7\frac{45}{83} \\
+                \Longrightarrow e = 7 \\
+                \Longrightarrow 5d = 626 - 83e = 626 - 83\cdot7 = 45 \Leftrightarrow d = 9
+            \end{gather*}
+    \end{itemize}
+    Таким образом, из всех значений цифры $c$ подошло только значение $c = 9$, причем в этом случае однозначно задаются оставшиеся цифры $e = 7$ и $d = 9$
+    $$
+        \boxed{c = 9,\quad e = 7,\quad d = 9}
+    $$
+
+    Подводя итоги, понимаем, что исходя из условий задачи нам удалось получить единственный набор цифр $a, b, c, d, e, f$ исходного числа
+    $$
+        \begin{cases}
+            a = 2, \\
+            b = 1, \\
+            c = 9, \\
+            d = 9, \\
+            e = 7, \\
+            f = 8  
+        \end{cases}
+    $$
+    Итак, единственным числом, удовлетворяющим условию задачи, является $\overline{abcdef} = 219978$.
+
+    Программка, решающая задачу (язык Си) 
+
+    $\ddot\smile$
+    \begin{minted}{c}
+    #include <stdio.h>
+
+    int reversed_fourth(void);
+
+    int main(void)
+    {
+        printf("Number: %d", reversed_fourth());
+        return 0;
+    }
+
+    int reversed_fourth(void) { return 219978; }
+    \end{minted}
+\end{document}
